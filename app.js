@@ -35,7 +35,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/',         productRoutes);
+// app.use('/',         productRoutes);
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>Hello World</h1>
+    <p>La aplicacion funciona en Render.</p>
+    <p>Puerto: ${port} | Entorno: ${process.env.NODE_ENV || 'development'}</p>
+  `);
+});
+
 app.use('/cart',     cartRoutes);
 app.use('/checkout', checkoutRoutes);
 
