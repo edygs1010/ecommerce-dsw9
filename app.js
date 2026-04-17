@@ -3,6 +3,7 @@ const express      = require('express');
 const path         = require('path');
 const session      = require('express-session');
 const cookieParser = require('cookie-parser');
+const ejsLayouts   = require('express-ejs-layouts');
 const sequelize    = require('./config/database');
 const { Product, Order, OrderItem } = require('./models');
 
@@ -15,6 +16,8 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('layout', 'layout');        // usa views/layout.ejs como plantilla base
+app.use(ejsLayouts);                // activa el sistema de layouts
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,6 +30,7 @@ app.use(session({
   cookie: { maxAge: 3600000 }
 }));
 
+// Middleware: carrito vacio en sesion si no existe
 app.use((req, res, next) => {
   if (!req.session.cart) {
     req.session.cart = { items: [], totalQty: 0, totalPrice: 0 };
@@ -35,15 +39,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
-app.get('/', (req, res) => {
-  res.send(`
-    <h1>Hello World</h1>
-    <p>La aplicacion funciona en Render.</p>
-    <p>Puerto: ${port} | Entorno: ${process.env.NODE_ENV || 'development'}</p>
-  `);
-});
-// app.use('/',         productRoutes);
+app.use('/',         productRoutes);
 app.use('/cart',     cartRoutes);
 app.use('/checkout', checkoutRoutes);
 

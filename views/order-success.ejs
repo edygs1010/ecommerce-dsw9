@@ -1,0 +1,12 @@
+<div class="text-center py-5">
+  <h1 class="display-4 mt-3">Gracias por tu compra!</h1>
+  <div class="card mx-auto mt-4 shadow-sm" style="max-width:480px">
+    <div class="card-header bg-success text-white">Detalles del Pedido</div>
+    <div class="card-body text-left">
+      <p><strong>Orden #:</strong> <%= order.id %></p>
+      <p><strong>Total:</strong> $<%= parseFloat(order.total).toFixed(2) %></p>
+      <p><strong>Estado:</strong> <span class="badge badge-success">Pagado</span></p>
+    </div>
+  </div>
+  <a href="/products" class="btn btn-primary mt-4">Seguir comprando</a>
+</div>

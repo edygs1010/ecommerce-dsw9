@@ -1,0 +1,36 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="/products">Productos</a></li>
+    <li class="breadcrumb-item active"><%= product.name %></li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-md-6">
+    <img src="<%= product.imageUrl %>" class="img-fluid rounded shadow" onerror="this.src='/images/placeholder.jpg'">
+  </div>
+  <div class="col-md-6">
+    <h1><%= product.name %></h1>
+    <p class="text-primary font-weight-bold h3">$<%= parseFloat(product.price).toFixed(2) %></p>
+    <hr>
+    <p><%= product.description %></p>
+    <div class="my-3">
+      <% if (product.stock > 0) { %>
+        <span class="badge badge-success p-2">En stock (<%= product.stock %> disponibles)</span>
+      <% } else { %>
+        <span class="badge badge-danger p-2">Agotado</span>
+      <% } %>
+    </div>
+    <form action="/cart/add" method="POST">
+      <input type="hidden" name="productId" value="<%= product.id %>">
+      <div class="form-group">
+        <label>Cantidad:</label>
+        <input type="number" class="form-control w-25" name="quantity" value="1" min="1" max="<%= product.stock %>" <%= product.stock === 0 ? 'disabled' : '' %>>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" <%= product.stock === 0 ? 'disabled' : '' %>>
+        <%= product.stock === 0 ? 'Agotado' : 'Anadir al carrito' %>
+      </button>
+      <a href="/products" class="btn btn-outline-secondary btn-lg ml-2">Volver</a>
+    </form>
+  </div>
+</div>
