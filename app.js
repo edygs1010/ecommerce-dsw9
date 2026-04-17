@@ -4,7 +4,7 @@ const path         = require('path');
 const session      = require('express-session');
 const cookieParser = require('cookie-parser');
 const sequelize    = require('./config/database');
-// const { Product, Order, OrderItem } = require('./models');
+const { Product, Order, OrderItem } = require('./models');
 
 const productRoutes  = require('./routes/products');
 const cartRoutes     = require('./routes/cart');
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/',         productRoutes);
+
 app.get('/', (req, res) => {
   res.send(`
     <h1>Hello World</h1>
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
     <p>Puerto: ${port} | Entorno: ${process.env.NODE_ENV || 'development'}</p>
   `);
 });
-
+// app.use('/',         productRoutes);
 app.use('/cart',     cartRoutes);
 app.use('/checkout', checkoutRoutes);
 
