@@ -9,7 +9,7 @@
 <div class="admin-wrap">
   <aside class="admin-sidebar">
     <div class="store-brand">
-      <i class="bi bi-person-circle me-2"></i><span><%= user.name %></span>
+      <i class="bi bi-person-circle me-2"></i><span><%= (typeof user !== 'undefined' ? user : userSession).name %></span>
     </div>
     <nav>
       <a href="/customer/dashboard"><i class="bi bi-grid"></i> Mi cuenta</a>
